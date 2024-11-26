@@ -1,0 +1,54 @@
+.questionBody {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vote_section {
+    display: flex;
+    align-items: center;
+  }
+  
+  .aVote {
+    cursor: pointer;
+    font-size: 24px;
+    margin: 0 10px;
+    transition: transform 0.3s;
+  }
+  
+  .aVote:hover {
+    transform: scale(1.4);
+  }
+  
+  #voteCount {
+    font-size: 18px;
+    margin: 0 10px;
+  }
+  
+  .view {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .answer_question_text {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .question_author {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .answer_question_meta {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .right_padding {
+    padding-right: 20px;
+  }

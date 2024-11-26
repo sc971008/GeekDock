@@ -1,0 +1,47 @@
+.answers_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.title_container {
+  display: flex;
+  align-items: center;
+}
+
+.button_container{
+  width: auto;
+  display: flex;
+}
+
+.bold_title {
+  font-weight: bold;
+  margin-right: 20px;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+.answer_question_title {
+  font-size: 1.2em; /* Adjust font size as needed */
+}
+
+.ansCount{
+    font-size: 14px;
+    color: #666;
+    margin-right: 10px;
+}
+
+.listSelect_container{
+  background-color: #f4f4f4;
+  padding: 20px;
+  width: 60%; /* Adjust as per requirement */
+  margin: 20px auto; /* Centers the form on the page */
+}
+
+.select_title{
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+

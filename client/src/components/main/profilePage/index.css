@@ -1,0 +1,15 @@
+.optionName {
+    background-color: cornflowerblue;
+    font-size: 20px;
+    color:white;
+    cursor: pointer;
+    transition-duration: 0.4s; 
+    border-radius: 5px;
+    width:200px;
+
+}
+
+.rounded-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    color: white;
+}

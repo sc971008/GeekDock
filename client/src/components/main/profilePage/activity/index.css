@@ -1,0 +1,9 @@
+.vote_container {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+}
+
+.vote_status{
+    margin-right: 10px;
+}
+  
