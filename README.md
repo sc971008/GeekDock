@@ -23,4 +23,3 @@ npx jest --runInBand --coverage
 #### Report will be under
 server\coverage\lcov-report\index.html
 
-## Extra Credit Section (if applicable)
