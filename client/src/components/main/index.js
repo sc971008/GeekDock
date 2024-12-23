@@ -12,14 +12,14 @@ import SavePage from "./savePage";
 import ProfilePage from "./profilePage";
 
 
-const Main = ({ user,page="home",search = "", setQuesitonPage,title,setPage,fetchUser}) => {
+const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLogin, setUser,setPage, fetchUser }) => {
     const [questionOrder, setQuestionOrder] = useState("newest");
     const [qid, setQid] = useState("");
 
     let selected = "";
     let content = null;
 
-    const handleQuestions = () => {    
+    const handleQuestions = () => {
         setQuesitonPage()
         fetchUser()
         setPage("home");
@@ -40,9 +40,7 @@ const Main = ({ user,page="home",search = "", setQuesitonPage,title,setPage,fetc
         setPage("answer");
     };
 
-    const handleSave = (qid) =>{
-        setQid(qid);
-        fetchUser();
+    const handleSave = () => {
         setPage("save");
     }
 
@@ -82,7 +80,7 @@ const Main = ({ user,page="home",search = "", setQuesitonPage,title,setPage,fetc
             break;
         }
 
-        case "profile":{
+        case "profile": {
             selected = "";
             content = (
                 <ProfilePage
@@ -96,14 +94,14 @@ const Main = ({ user,page="home",search = "", setQuesitonPage,title,setPage,fetc
             break;
         }
 
-        case "register":{
+        case "register": {
             selected = "";
-            content = <Register setPage={setPage}/>;
+            content = <Register setPage={setPage} />;
             break;
         }
-        case "login":{
+        case "login": {
             selected = "";
-            content = <Login handleQuestions={handleQuestions}/>;
+            content = <Login setPage={setPage} setLogin={setLogin} fetchUser={fetchUser} setUser={setUser} />;
             break;
         }
         case "tag": {
@@ -138,12 +136,12 @@ const Main = ({ user,page="home",search = "", setQuesitonPage,title,setPage,fetc
         }
         case "newAnswer": {
             selected = "";
-            content = <NewAnswer qid={qid} handleAnswer={handleAnswer} setPage={setPage}/>;
+            content = <NewAnswer qid={qid} handleAnswer={handleAnswer} setPage={setPage} />;
             break;
         }
-        case "save" :{
-            selected ="";
-            content = <SavePage user={user} qid={qid} handleAnswer={handleAnswer}/>
+        case "save": {
+            selected = "";
+            content = <SavePage user={user} qid={qid} handleAnswer={handleAnswer} />
             break;
         }
         default:
@@ -153,14 +151,16 @@ const Main = ({ user,page="home",search = "", setQuesitonPage,title,setPage,fetc
     }
 
     return (
-        <div id="main" className="main">
-            <SideBarNav
-                selected={selected}
-                handleQuestions={handleQuestions}
-                handleTags={handleTags}
-            />
-            <div id="right_main" className="right_main">
-                {content}
+        <div id="main" className="main bg-body text-body " data-bs-theme="dark" >
+            <div className="container d-flex justify-content-start" >
+                <SideBarNav
+                    selected={selected}
+                    handleQuestions={handleQuestions}
+                    handleTags={handleTags}
+                />
+                <div id="right_main" className="right_main p-3">
+                    {content}
+                </div>
             </div>
         </div>
     );

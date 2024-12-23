@@ -1,5 +1,4 @@
 const express = require("express");
-const  {escapeInject} = require('../utils/sanitizer')
 const router = express.Router();
 const mongoose = require("mongoose")
 mongoose.set('sanitizeFilter', true);
@@ -11,7 +10,7 @@ const Question = require("../models/questions");
 const registerUser = async(req,res) =>{
     // prevernt NoSQL injection
     try{
-        let username = await escapeInject(req.body.username.trim())
+        let username = req.body.username.trim()
         let password = req.body.password.trim()
 
         //found username Match
@@ -30,11 +29,12 @@ const registerUser = async(req,res) =>{
 
 const loginUser = async(req,res) =>{
     try{
-        let username = await escapeInject(req.body.username.trim())
+        let username = req.body.username.trim()
         let password = req.body.password.trim()
-
+        console.log({username,password})
         //found username Match
         const userMongo = await User.findOne({username: username})
+        console.log(userMongo)
         if (userMongo){
             if(userMongo.password == password){
                 req.session.user= userMongo._id

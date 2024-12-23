@@ -1,12 +1,12 @@
-.sideBarNav {
+/* .sideBarNav {
     display: flex;
     flex-direction: column;
     width: 15%;
-    border-right: 2px solid #ddd; /* Fancy border */
+    border-right: 2px solid #ddd; 
     padding: 4% 0;
     align-items: center;
-    background-color: #f8f9fa; /* Light background */
-}
+    background-color: #f8f9fa; 
+} */
 
 .menu_button:first-child {
     margin-top: 0;

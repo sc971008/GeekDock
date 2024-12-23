@@ -1,94 +1,80 @@
 import { useState } from "react";
-import Form from "../baseComponents/form";
-import Input from "../baseComponents/input";
+import { useRef } from "react";
 import { authUser } from "../../../services/userService";
+import FloatInput from "../baseComponents/floatingInput";
 
-const Login = ({handleQuestions}) => {
-    const[username,setUsername] = useState("")
-    const[password,setPassword] = useState("")
-    const[goodfeedback,setGoodFeedback] = useState(null)
-    const[badfeedback,setBadFeedback] = useState(null)
 
-    const[userError,setUserError] = useState("")
-    const[passError,setPassError] = useState("")
 
-    const resetHints = () =>{
-        setPassError("")
-        setUserError("")
-        setGoodFeedback(null)
-        setBadFeedback(null)
-    }
 
-    const postUser = async()=>{
-        let isValid = true;
-        resetHints()
+const Login = ({ setPage,setLogin,setUser}) => {
+    const emailRef = useRef(null)
+    const passwordRef = useRef(null)
 
-        if(!username){
-            setUserError("Username cannot be empty")
-            isValid = false;
+    const [postFeeback, setPostFeedback] = useState("")
+    const [loading, setLoading] = useState(false)
+
+    const postUser = async (event) => {
+        event.preventDefault()
+        setPostFeedback("")
+        setLoading(true)
+
+        const user = {
+            username: emailRef.current.value,
+            password: passwordRef.current.value,
         }
-        if(!password){
-            setPassError("Password cannot be empty")
-            isValid = false;
-        }
-        if(!isValid){
-            return;
-        }
-
-        const user = {           
-            username:username,
-            password:password,
-        }
-
+        
         const res = await authUser(user)
 
-        if(res && res._id){
-            console.log(`User ${res.username} logged in`)
-            setGoodFeedback(`${res.username} Log In sucessfully ....Redirecting To HomePage`)
-            setTimeout(() => {
-                handleQuestions()
-            }, 1200);
-        }else{
-            setBadFeedback(res.message)
+        if (res && res._id) {
+            console.log(`User ${res.username} logged in`);
+            setUser(res)
+            setLogin(true);
+            setPage("home");
+        } else {
+            setPostFeedback(res.message);
+            setLoading(false);
         }
-
+        
     }
 
-    return(
-        <Form>
-            <Input
-                title={"Username"}
-                hint={""}
-                id={"formUserInput"}
-                val={username}
-                setState={setUsername}
-                err={userError}
-            />
-            <Input
-                title={"Password"}
-                hint={""}
-                id={"formPassInput"}
-                val={password}
-                setState={setPassword}
-                err={passError}
-            />
 
-            <div className="btn_indicator_container">
-                <button
-                    className="form_postBtn"
-                    onClick={() => {
-                        postUser();
-                    }}
-                >
-                    Log In
-                </button>
-                <div className="mandatory_indicator">
-                    * indicates mandatory fields
+    return (
+
+        <div className="container d-flex flex-column align-items-center py-4 w-100 m-auto">
+            <i className="fs-1 bi bi-braces-asterisk" style={{ color: "cornflowerblue" }} ></i>
+            <form className="form-signin need-validation w-50" onSubmit={postUser}>
+                <h3 className="text-center" >Please sign in.</h3>
+                
+                <FloatInput
+                    id="floatingInput"
+                    label="Email address"
+                    ref={emailRef}
+                    type="email"
+                    placeholder="email"
+                />
+                <FloatInput
+                    id="floatingPassword"
+                    label="Password"
+                    ref={passwordRef}
+                    type="password"
+                    placeholder="Password"
+                />
+                <div className="form-check text-start my-3">
+                    <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"></input>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                        Remember me
+                    </label>
                 </div>
-            </div>
-            {goodfeedback && <div className="goodfeedback">{goodfeedback}</div>}
-            {badfeedback && <div className="badfeedback">{badfeedback}</div>}
-        </Form>
+                <button className="btn btn-primary w-100 py-2" type="submit">
+                    {loading ? (
+                        <div className="spinner-border text-light py-2" role="status">
+                        </div>
+                    ) : (
+                        'Sign In')}</button>
+                <div className="my-2 text-warning">{postFeeback}</div>
+                {/* <p className="mt-5 mb-3 text-body-secondary">&copy; Cheng Shi Project</p> */}
+            </form>
+        </div>
     )
 }
 

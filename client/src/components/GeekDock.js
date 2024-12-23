@@ -4,13 +4,15 @@ import Header from "./header";
 import Main from "./main";
 import { getUser } from "../services/userService";
 
-export default function FakeStackOverflow() {
+
+export default function GeekDock() {
     const [search, setSearch] = useState("");
     const [mainTitle, setMainTitle] = useState("All Questions");
     const [page, setPage] = useState("home");
+    const [login, setLogin] = useState(null);
     const [user,setUser] = useState(null)
 
-    useEffect( () => {
+    useEffect(() => {
         fetchUser()
      },[])
 
@@ -18,8 +20,10 @@ export default function FakeStackOverflow() {
         const res = await getUser()
         if(res && res._id){
             setUser(res)
+            setLogin(true)
         }else{
             setUser(null)
+            setLogin(false)
         }
     }
 
@@ -28,6 +32,7 @@ export default function FakeStackOverflow() {
         setMainTitle(title);
     };
 
+
     return (
         <>
             <Header 
@@ -35,16 +40,19 @@ export default function FakeStackOverflow() {
                 search={search} 
                 setQuesitonPage={setQuesitonPage} 
                 setPage={setPage}
-                fetchUser={fetchUser}
+                setLogin={setLogin}
+                login={login}
             />
             <Main
                 user={user}
                 page={page}
-                setPage={setPage}
                 search={search}
                 title={mainTitle}
-                setQuesitonPage={setQuesitonPage}
+                setPage={setPage}
+                setUser={setUser}
+                setLogin={setLogin}
                 fetchUser={fetchUser}
+                setQuesitonPage={setQuesitonPage}
             />
         </>
     );

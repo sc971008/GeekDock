@@ -1,108 +1,75 @@
 import { useState } from "react";
-import Form from "../baseComponents/form";
-import Input from "../baseComponents/input";
 import { addUser } from "../../../services/userService";
+import FloatInput from "../baseComponents/floatingInput";
 
-const Register = ({setPage}) => {
-    const[username,setUsername] = useState("")
-    const[password,setPassword] = useState("")
-    const[goodfeedback,setGoodFeedback] = useState(null)
-    const[badfeedback,setBadFeedback] = useState(null)
+const Register = ({ setPage }) => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [postFeeback, setPostFeedback] = useState("")
+    const [loading, setLoading] = useState(false)
 
-    const[userError,setUserError] = useState("")
-    const[passError,setPassError] = useState("")
 
-    const resetHints = () =>{
-        setPassError("")
-        setUserError("")
-        setGoodFeedback(null)
-        setBadFeedback(null)
-    }
     //helper function 
-    const postUser = async() => {
-        let isValid = true;
-        resetHints()
-
-        if(!username){
-            setUserError("Username cannot be empty")
-            isValid = false;
-        }else if(username.length > 20){
-            setUserError("Username cannot be more than 20 char")
-            isValid = false;
-        }else if(!username.match("^[A-Za-z0-9]+$")){
-            setUserError("Username can only contains alphabet char")
-            isValid = false;
-        }
-
-        if(!password){
-            setPassError("Password cannot be empty")
-            isValid = false;
-        }else if(password.length < 10){
-            setPassError("At least to be 10 char long")
-            isValid = false;
-        }else if(password.match("^[A-Za-z0-9]+$")){
-            setPassError("Use at least 1 special char")
-            isValid = false;
-        }
-
-        if(!isValid){
-            return;
-        }
+    const postUser = async () => {
+        event.preventDefault()
+        setPostFeedback("")
+        setLoading(true)
 
         const user = {
-            username:username,
-            password:password,
-            reg_date:new Date()
+            username: email,
+            password: password,
+            reg_date: new Date()
         }
 
         const res = await addUser(user)
- 
-        if(res && res._id){
+
+        if (res && res._id) {
             console.log(`User [${res.username}] added`)
-            setGoodFeedback(`[${res.username}] Registerd sucessfully ....Redirecting to Log In`)
+            setPostFeedback(`[${res.username}] Register sucessfully ! \n ...Redirecting to Log In`)
             setTimeout(() => {
                 setPage('login');
             }, 2000);
-        }else{
-            setBadFeedback(res.message)
+        } else {
+            setPostFeedback(res.message)
         }
     }
 
-    return(
-        <Form>
-            <Input
-                title={"Username"}
-                hint={"Only aplhabet char and number, limit to 20 char or less"}
-                id={"formUserInput"}
-                val={username}
-                setState={setUsername}
-                err={userError}
-            />
-            <Input
-                title={"Password"}
-                hint={"Use strong password with at least 1 special char, mininum 10 char."}
-                id={"formPassInput"}
-                val={password}
-                setState={setPassword}
-                err={passError}
-            />
-
-            <div className="btn_indicator_container">
-                <button
-                    className="form_postBtn"
-                    onClick={() => {
-                        postUser();
+    return (
+        <div className="container d-flex flex-column align-items-center py-4  w-100 m-auto">
+            <i className="fs-1 bi bi-braces-asterisk mx-2" style={{ color: "cornflowerblue" }} ></i>
+            <form className="form-signin need-validation" onSubmit={postUser}>
+                <h1 className="h3 mb-3 fw-normal" >Join the Dock now.</h1>
+                <h3 className="text-secondary" style={{fontSize: "12px"}}> By clicking “Sign up”, you agree to our terms of service and acknowledge you have read our privacy policy.</h3>
+                    <FloatInput
+                    id="floatingInput"
+                    label="Email address"
+                    value={email}
+                    onChange={(e) => {
+                        setEmail(e.target.value);
                     }}
-                >
-                    Confirm to Register
-                </button>
-                <div className="mandatory_indicator">
-                    * indicates mandatory fields
-                </div>
-            </div>
-            {goodfeedback && <div className="goodfeedback">{goodfeedback}</div>}
-            {badfeedback && <div className="badfeedback">{badfeedback}</div>}
-        </Form>
+                    type="email"
+                    placeholder="email"
+                />
+                <FloatInput
+                    id="floatingPassword"
+                    label="Password"
+                    value={password}
+                    onChange={(e) => {
+                        setPassword(e.target.value);
+                    }}
+                    type="password"
+                    placeholder="Password"
+                />
+                <button className="my-2 btn btn-primary w-100 py-2" type="submit">
+                    {loading ? (
+                        <div className="spinner-border text-light py-2" role="status">
+                        </div>
+                    ) : (
+                        'Sign Up')}</button>
+                <div className="my-2 text-warning">{postFeeback}</div>
+                {/* <p className="mt-5 mb-3 text-body-secondary">&copy; Cheng Shi Project</p> */}
+            </form>
+        </div>
     )
 }
 
