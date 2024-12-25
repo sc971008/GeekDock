@@ -3,7 +3,7 @@ import "./index.css";
 const SideBarNav = ({ selected = "", handleQuestions, handleTags }) => {
     return (
         <>
-            <div id="sideBarNav" className="d-flex flex-column flex-shrink-0 p-1">
+            <div id="sideBarNav" className="d-flex flex-column flex-shrink-0 p-1 pe-3">
                 <ul className="nav nav-pills flex-column mb-auto">
                     <li
                         id="menu_question"
@@ -11,7 +11,7 @@ const SideBarNav = ({ selected = "", handleQuestions, handleTags }) => {
                         onClick={handleQuestions}
                     >
                         <i className="bi bi-patch-question-fill me-1"></i>
-                        Questions
+                        <text className="d-none d-md-block">Questions</text>
                     </li>
                     <li
                         id="menu_tag"
@@ -19,7 +19,7 @@ const SideBarNav = ({ selected = "", handleQuestions, handleTags }) => {
                         onClick={handleTags}
                     >   
                         <i className="bi bi-tag-fill me-1"></i>
-                        Tags
+                        <text className="d-none d-md-block">Tags</text>
                     </li>
                 </ul>
 

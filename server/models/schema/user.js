@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 var Schema = mongoose.Schema
+const { REACT_APP_API_URL } = require("../../config.js");
+
 
 // Schema for users
 var questionList = new Schema({
@@ -13,7 +15,7 @@ const User = mongoose.Schema(
         username:{type:String, required:true, unique:true},
         password:{type:String, required:true},
         reg_date:{type:Date, required:true},
-        profile_pic_url:{ type: String, default: 'http://localhost:8000/images/default.jpg' },
+        profile_pic_url:{ type: String, default: "http://100.0.195.180:8000/images/default.jpg"},
         save_lists:[questionList],
         subscribes:[{type:Schema.Types.ObjectId,ref:'Question'}],
     },

@@ -12,7 +12,7 @@ import SavePage from "./savePage";
 import ProfilePage from "./profilePage";
 
 
-const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLogin, setUser,setPage, fetchUser }) => {
+const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLogin, setUser,setPage, fetchUser, visual}) => {
     const [questionOrder, setQuestionOrder] = useState("newest");
     const [qid, setQid] = useState("");
 
@@ -60,6 +60,7 @@ const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLog
     const getQuestionPage = (order = "newest", search = "") => {
         return (
             <QuestionPage
+                visual={visual}
                 title_text={title}
                 order={order}
                 search={search}
@@ -151,14 +152,14 @@ const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLog
     }
 
     return (
-        <div id="main" className="main bg-body text-body " data-bs-theme="dark" >
-            <div className="container d-flex justify-content-start" >
+        <div id="main" className="main text-body">
+            <div className="container d-flex justify-content-between" >
                 <SideBarNav
                     selected={selected}
                     handleQuestions={handleQuestions}
                     handleTags={handleTags}
                 />
-                <div id="right_main" className="right_main p-3">
+                <div id="right_main" className="right_main w-100">
                     {content}
                 </div>
             </div>

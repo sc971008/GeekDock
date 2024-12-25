@@ -41,12 +41,12 @@ app.use(
 )
 
 
-//set cross site
+// set cross site
 app.use(
   cors({
-    credentials: true,
-    origin: [CLIENT_URL,"http://100.0.195.180:3000"],
-    })
+    credentials: true, // 允许发送 Cookie
+    origin: ["http://localhost:3000", "http://100.0.195.180:3000"], // 允许的前端地址
+  })
 );
 
 app.use(express.json());
@@ -71,8 +71,8 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something went wrong!');
 });
 
-let server = app.listen(port, () => {
-    console.log(`Server starts at http://localhost:${port}`);
+let server = app.listen(port, "0.0.0.0", () => {
+  console.log(`Server starts at http://0.0.0.0:${port}`);
 });
 
 process.on("SIGINT", () => {

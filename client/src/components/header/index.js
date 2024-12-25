@@ -3,15 +3,15 @@ import React, { useState } from "react";
 import { logoutUser } from "../../services/userService";
 
 
-const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login }) => {
+const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login,visual}) => {
 	const [val, setVal] = useState(search);
 
 
 	return (
 		<>
-			<header id="hearder" className="p-3 bg-body text-body " data-bs-theme="dark">
+			<header id="hearder" className="p-3 text-body">
 
-				<div className="container border-bottom">
+				<div className="container border-bottom ">
 					<div className="mb-3 d-flex flex-wrap align-items-center justify-content-center text-body justify-content-lg-start ">
 						{/* Title */}
 						<a id="title" href="/" className="title fs-3 d-flex align-items-center mb-2 mb-lg-0 text-body text-decoration-none">
@@ -25,7 +25,7 @@ const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login }) => 
 							<input
 								id="searchBar"
 								type="search"
-								className="form-control form-control-dark mr-sm-2"
+								className="form-control  mr-sm-2"
 								placeholder="Search..."
 								aria-label="Search"
 								value={val}
@@ -46,7 +46,8 @@ const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login }) => 
 							<div className="ms-auto text-end ">
 								<button
 									type="button"
-									className="btn btn-sm btn-outline-light me-2"
+									// set classanme to btn base on visual state
+									className={`btn btn-sm btn-${visual === 'dark' ? 'dark' : 'secondary'} me-2`}
 									onClick={() => { setPage("login") }}
 								>Log In</button>
 								<button
@@ -73,12 +74,6 @@ const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login }) => 
 										</li>
 									</ul>
 								</div>
-
-								{/* <button
-									type="button"
-									className="btn btn-warning"
-									onClick={() => { logoutUser(); setLogin(false); setPage("home") }}
-								>Log Out</button> */}
 							</div>
 						)}
 

@@ -13,7 +13,8 @@ const QuestionPage = ({
     setQuestionOrder,
     clickTag,
     handleAnswer,
-    setPage
+    setPage,
+    visual
 }) => {
     const [qlist, setQlist] = useState([]);
     useEffect(() => {
@@ -33,14 +34,16 @@ const QuestionPage = ({
                 questionOrder={questionOrder}
                 setQuestionOrder={setQuestionOrder}
                 setPage={setPage}
+                visual={visual}
             />
-            <div id="question_list" className="question_list">
+            <div id="question_list" className={`question_list d-flex flex-column bg-${visual==='dark'?'dark':'body'} border rounded`}>
                 {qlist.map((q, idx) => (
                     <Question
                         q={q}
                         key={idx}
                         clickTag={clickTag}
                         handleAnswer={handleAnswer}
+                        visual={visual}
                     />
                 ))}
             </div>

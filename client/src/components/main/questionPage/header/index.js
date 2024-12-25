@@ -2,7 +2,7 @@ import "./index.css";
 import { useState } from "react";
 import OrderButton from "./orderButton";
 import { getUser } from "../../../../services/userService";
-const QuestionHeader = ({title_text,qcnt,questionOrder,setQuestionOrder,setPage}) => {
+const QuestionHeader = ({title_text,qcnt,questionOrder,setQuestionOrder,setPage,visual}) => {
     const [askFeedBack,setAskFeedBack] = useState("")
 
     const handleNewQuestionClick = async () => {
@@ -18,11 +18,12 @@ const QuestionHeader = ({title_text,qcnt,questionOrder,setQuestionOrder,setPage}
     }
 
     return (
-        <div>
-            <div className="space_between right_padding">
-                <div className="bold_title">{title_text}</div>
+        <div className="question_header d-flex flex-column justify-content-between ">
+
+            <div id="" className="d-flex justify-content-between mb-3">
+                <div className="fs-4">{title_text}</div>
                 <button
-                    className="bluebtn"
+                    className="btn btn-primary"
                     onClick={() => {
                         handleNewQuestionClick()
                     }}
@@ -30,15 +31,17 @@ const QuestionHeader = ({title_text,qcnt,questionOrder,setQuestionOrder,setPage}
                     {!askFeedBack && `Ask a Question`}{askFeedBack}
                 </button>
             </div>
-            <div className="space_between right_padding">
+            
+            <div className="d-flex justify-content-between mb-2">
                 <div id="question_count">{qcnt} questions</div>
-                <div className="btns">
-                    {["Newest", "Active", "Unanswered"].map((m, idx) => (
+                <div id="orderBar" className={`btn-group btn-secondary bg-${visual ==='dark' ? 'dark':'body'}`} role="group" aria-label="Basic radio toggle button group">  
+                    {["Newest", "Active", "Unanswered"].map((label,idx) => (
                         <OrderButton
+                            key = {idx}
+                            label={label}
                             questionOrder={questionOrder}
-                            key={idx}
-                            message={m}
                             setQuestionOrder={setQuestionOrder}
+                            visual={visual}
                         />
                     ))}
                 </div>
