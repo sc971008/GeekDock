@@ -17,7 +17,7 @@ const Question = ({ q, clickTag, handleAnswer }) => {
                         return (
                             <button
                                 key={idx}
-                                className={`btn border btn-sm me-2 font-monospace`}
+                                className={`btn border btn-sm me-2 font-monospace shadow-sm`}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     clickTag(tag.name);

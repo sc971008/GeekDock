@@ -2,18 +2,18 @@ import "./index.css";
 import { useState } from "react";
 import Form from "../../baseComponents/form";
 import Input from "../../baseComponents/input";
-import { getUser, createNewList, saveQuestionToList} from "../../../../services/userService";
+import { getUser, createNewList, saveQuestionToList } from "../../../../services/userService";
 import { Modal, Button, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
 
 // Header for the Answer page
-const AnswerHeader = ({ 
-    user, 
-    question, 
-    ansCount=0, 
-    title, 
-    handleSubscribe, 
-    setPage, 
+const AnswerHeader = ({
+    user,
+    question,
+    ansCount = 0,
+    title,
+    handleSubscribe,
+    setPage,
     fetchUser }) => {
     const [subFeedback, setSubFeedBack] = useState(null)
     const [saveFeedback, setSaveFeedBack] = useState(null)
@@ -21,24 +21,13 @@ const AnswerHeader = ({
     const [listname, setListname] = useState("")
     const [listnameErr, setListnameErr] = useState("")
     const [addListFeedback, setAddListFeedback] = useState("")
-    const [saveTolistFeedback,setSaveToListFeedback] = useState("")
+    const [saveTolistFeedback, setSaveToListFeedback] = useState("")
     const [listSelection, setListSelection] = useState(
         (user && user.save_lists && user.save_lists.length > 0) ? user.save_lists[0].name : '' // Handle undefined
-      );
-    const [askFeedBack,setAskFeedBack] = useState("")
-    // const [subModal, setSubModal] = useState(false);
-    // const [subscribeQuestion,setSubscribedQuestions]=useState([]);
+    );
+    const [askFeedBack, setAskFeedBack] = useState("")
 
-    // const toggleSubModal =() => setSubModal(!subModal);
     const toggle = () => setModal(!modal);
-
-    // useEffect(()=>{
-    //     if(user&& user._id){
-    //         subscribedQuestionsWithNewAnswers().then(
-    //             data=> setSubscribedQuestions(data)
-    //         ).catch(err=>console.error('Error fetching subscribed questions', err));
-    //     }
-    // },[user]);
 
 
     const handleSaveModal = async () => {
@@ -53,18 +42,6 @@ const AnswerHeader = ({
         }
     }
 
-    // const handleSubModal = async () => {
-    //     // Check if logged In
-    //     const res = await getUser();
-    //     // console.log(`hiiiii${res._id}`);
-    //     if (res && res._id) {
-    //         toggle()
-    //     }
-    //     else {
-    //         setSubFeedBack(" ⛔️ Not logged In ...Redirecting")
-    //         setTimeout(() => { setPage("login") }, 1000)
-    //     }
-    // }
 
     const handleNewQuestion = async () => {
         // Check if logged In
@@ -81,7 +58,7 @@ const AnswerHeader = ({
     const postSub = async () => {
         const res = await handleSubscribe(question._id);
         if (res && res._id) {
-            setSubFeedBack(`✅️ Subscribed`)
+            setSubFeedBack(`✅️`)
         }
         else {
             if (res.message == 'User session not found') {
@@ -89,24 +66,24 @@ const AnswerHeader = ({
                 setTimeout(() => { setPage("login") }, 1000)
             }
             if (res.message == "Already subscribed to this question") {
-                setSubFeedBack('✅️ Already subscribed')
+                setSubFeedBack('✅️')
             }
-            if (res.message =='Subscription successful' ){
-                setSubFeedBack(`✅️ Subscribed`)
+            if (res.message == 'Subscription successful') {
+                setSubFeedBack(`✅️`)
             }
         }
     }
 
     const postSave = async () => {
-        const res = await saveQuestionToList(question._id,listSelection)
-        if(res && res._id){
+        const res = await saveQuestionToList(question._id, listSelection)
+        if (res && res._id) {
             setSaveToListFeedback(`✅️ Added`)
         }
         else if (res.message == 'User session not found') {
             setSaveToListFeedback(" ⛔️ Not logged In ...Redirecting")
             setTimeout(() => { setPage("login") }, 1000)
         }
-        else if(res.message=='List already have this question'){
+        else if (res.message == 'List already have this question') {
             setSaveToListFeedback("✅️ Already added")
         }
     }
@@ -144,35 +121,37 @@ const AnswerHeader = ({
     }
 
     return (
-        <div id="answersHeader" className="answers_header">
-            <div className="title_container">
-            <div className="ansCount">{ansCount} answers</div>  {/* Default to avoid undefined */}
-        <div className="bold_title">{title || 'No Title'}</div>
+        <div id="answersHeader" className=" mb-3 ">
+            <div id="first_level" className="d-flex justify-content-between">
+                <div id="questionTitle" className="fs-3 w-75">{title || 'No Title'}</div>
+                <div id="buttons" className="justify-content-between ms-auto text-end">
+                    <button
+                        className={`border btn btn-sm shadow-sm ms-1 mb-1`}
+                        onClick={() => {
+                            postSub()
+                        }}
+                    > {!subFeedback && `🔔`}{subFeedback}
+                    </button>
+                    <button
+                        className={`border btn btn-sm shadow-sm ms-1 mb-1`}
+                        onClick={() => {
+                            handleSaveModal()
+                        }}
+                    >
+                        {!saveFeedback && `💾`} {saveFeedback}
+                    </button>
+                    <button
+                        className={`border btn btn-primary btn-sm shadow-sm opcity-50 ms-1 mb-1`}
+                        onClick={() => {
+                            handleNewQuestion();
+                        }}
+                    >
+                        {!askFeedBack && `Ask Question`}{askFeedBack}
+                    </button>
+                </div>
             </div>
-            <div className="button_container">
-                <button
-                    className="greenbtn"
-                    onClick={() => {
-                        postSub()
-                    }}
-                > {!subFeedback && `🔔`}{subFeedback}
-                </button>
-                <button
-                    className="greenbtn"
-                    onClick={() => {
-                        handleSaveModal()
-                    }}
-                >
-                    {!saveFeedback && `💾`} {saveFeedback}
-                </button>
-                <button
-                    className="bluebtn"
-                    onClick={() => {
-                        handleNewQuestion();
-                    }}
-                >
-                    {!askFeedBack && `Ask a Question`}{askFeedBack}
-                </button>
+            <div id="second_level" className="d">
+                <div className="ansCount">{ansCount} answers</div>
             </div>
             <Modal className="SaveModal" isOpen={modal} toggle={toggle} >
                 <ModalHeader toggle={toggle}>Save Question</ModalHeader>
@@ -200,12 +179,12 @@ const AnswerHeader = ({
                     {user && user.save_lists.length > 0 &&
                         <div className="listSelect_container">
                             <div className="select_title"> Chose A list to Save : {`  `}</div>
-                            <select className = "form-select" value={listSelection} onChange={(e) => setListSelection(e.target.value)}>
+                            <select className="form-select" value={listSelection} onChange={(e) => setListSelection(e.target.value)}>
                                 {user.save_lists.map((qlist, idx) => (
                                     <option key={idx} value={qlist.name} >{qlist.name}</option>
                                 ))}
                             </select>
-                            <Button className = "saveB" color="primary" onClick={postSave}>
+                            <Button className="saveB" color="primary" onClick={postSave}>
                                 {!saveTolistFeedback && `Save`}{saveTolistFeedback}
                             </Button>
                         </div>}

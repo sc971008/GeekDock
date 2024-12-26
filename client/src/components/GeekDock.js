@@ -19,6 +19,7 @@ export default function GeekDock() {
 
     const fetchUser = async () => {
         const res = await getUser()
+        console.log("Fetched user:", res)
         if (res && res._id) {
             setUser(res)
             setLogin(true)
@@ -31,11 +32,12 @@ export default function GeekDock() {
     const setQuesitonPage = (search = "", title = "Newest Questions") => {
         setSearch(search);
         setMainTitle(title);
+        setPage("questions");
     };
 
 
     return (
-        <html className="bg-body bg-body-tertiary" data-bs-theme={visual}>
+        <div className="overflow-auto flex-grow-1 bg-body bg-body-tertiary" data-bs-theme={visual}>
             <Header
                 user={user}
                 search={search}
@@ -43,14 +45,12 @@ export default function GeekDock() {
                 setPage={setPage}
                 setLogin={setLogin}
                 login={login}
-                visual={visual}
             />
             <Main
                 user={user}
                 page={page}
                 search={search}
                 title={mainTitle}
-                visual={visual}
                 setPage={setPage}
                 setUser={setUser}
                 setLogin={setLogin}
@@ -65,6 +65,6 @@ export default function GeekDock() {
                 }
             }}>{visual === "dark" ?  <i className="bi bi-brightness-high-fill"></i>: <i className="bi bi-moon-stars-fill"></i>}
             </button>
-        </html>
+        </div>
     );
 }

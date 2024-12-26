@@ -35,10 +35,10 @@ const Register = ({ setPage }) => {
     }
 
     return (
-        <div className="container d-flex flex-column align-items-center py-4  w-100 m-auto">
+        <div className="container d-flex flex-column align-items-center py-4 w-100 w-md-75 w-lg-25 m-auto">
             <i className="fs-1 bi bi-braces-asterisk mx-2" style={{ color: "cornflowerblue" }} ></i>
             <form className="form-signin need-validation" onSubmit={postUser}>
-                <h1 className="h3 mb-3 fw-normal" >Join the Dock now.</h1>
+                <h1 className="fs-3 mb-3 fw-normal" >Join the Dock now.</h1>
                 <h3 className="text-secondary" style={{fontSize: "12px"}}> By clicking “Sign up”, you agree to our terms of service and acknowledge you have read our privacy policy.</h3>
                     <FloatInput
                     id="floatingInput"

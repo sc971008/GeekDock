@@ -18,23 +18,23 @@ const QuestionHeader = ({title_text,qcnt,questionOrder,setQuestionOrder,setPage,
     }
 
     return (
-        <div className="question_header d-flex flex-column justify-content-between ">
+        <div className="question_header d-flex flex-row justify-content-between mb-2">
 
-            <div id="" className="d-flex justify-content-between mb-3">
+            <div id="" className="d-flex flex-column justify-content-between">
                 <div className="fs-4">{title_text}</div>
+                <div id="question_count" className="fs-6 text-secondary">{qcnt} questions</div>
+            </div>
+
+            <div className="d-flex flex-column justify-content-between gap-2 ms-auto">
                 <button
-                    className="btn btn-primary"
+                    className="btn btn-primary shadow-sm ms-auto"
                     onClick={() => {
                         handleNewQuestionClick()
                     }}
                 >
                     {!askFeedBack && `Ask a Question`}{askFeedBack}
                 </button>
-            </div>
-            
-            <div className="d-flex justify-content-between mb-2">
-                <div id="question_count">{qcnt} questions</div>
-                <div id="orderBar" className={`btn-group btn-secondary bg-${visual ==='dark' ? 'dark':'body'}`} role="group" aria-label="Basic radio toggle button group">  
+                <div id="orderBar" className={`btn-group btn-secondary bg-${visual ==='dark' ? 'dark':'body'} shadow-sm ms-auto`} role="group" aria-label="Basic radio toggle button group">  
                     {["Newest", "Active", "Unanswered"].map((label,idx) => (
                         <OrderButton
                             key = {idx}

@@ -9,9 +9,9 @@ const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login,visual
 
 	return (
 		<>
-			<header id="hearder" className="p-3 text-body">
+			<header id="header" className="container py-4 text-body">
 
-				<div className="container border-bottom ">
+				<div className="border-bottom ">
 					<div className="mb-3 d-flex flex-wrap align-items-center justify-content-center text-body justify-content-lg-start ">
 						{/* Title */}
 						<a id="title" href="/" className="title fs-3 d-flex align-items-center mb-2 mb-lg-0 text-body text-decoration-none">
@@ -35,7 +35,7 @@ const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login,visual
 								onKeyDown={(e) => {
 									if (e.key === "Enter") {
 										e.preventDefault();
-										setQuesitonPage(e.target.value, "Search Results");
+										setQuesitonPage(e.target.value, `Search Results —— ${val}`);
 									}
 								}}
 							/>
@@ -47,7 +47,7 @@ const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login,visual
 								<button
 									type="button"
 									// set classanme to btn base on visual state
-									className={`btn btn-sm btn-${visual === 'dark' ? 'dark' : 'secondary'} me-2`}
+									className={`border btn btn-sm bg-${visual === 'dark' ? 'dark' : 'body'} me-2`}
 									onClick={() => { setPage("login") }}
 								>Log In</button>
 								<button

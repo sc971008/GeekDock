@@ -12,7 +12,8 @@ const OrderButton = ({ label, setQuestionOrder, questionOrder }) => {
                 id={label}
                 autoComplete="off"
                 checked={label.toLowerCase() == questionOrder}
-                onClick={() => { setQuestionOrder(label.toLowerCase()) }} ></input>
+                onChange={() => { setQuestionOrder(label.toLowerCase()) }}
+            ></input>
             <label className="btn btn-sm" htmlFor={label} >{label}</label>
         </>
     );

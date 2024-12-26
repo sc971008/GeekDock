@@ -25,7 +25,6 @@ app.use((req, res, next) => {
 // Serve static files from the 'public' directory
 app.use(express.static(__dirname + '/public'));
 
-
 // session
 app.use(express.urlencoded({ extended: false }))
 const secret = process.argv[2];
@@ -33,19 +32,20 @@ app.use(
   session({
     secret: `${secret}`,
     cookie: {
-        httpOnly: true,
+        secure: false,
+        httpOnly: true,// 1 week ,
+        maxAge: 7 * 24 * 60 * 60 * 1000 
     },
     resave: false,
     saveUninitialized: false
   })
 )
 
-
 // set cross site
 app.use(
   cors({
     credentials: true, // 允许发送 Cookie
-    origin: ["http://localhost:3000", "http://100.0.195.180:3000"], // 允许的前端地址
+    origin: ["http://localhost:3000","http://100.0.195.180:3000"], // 允许的前端地址
   })
 );
 
@@ -64,7 +64,7 @@ app.use("/user",userController)
 app.use("/vote",voteController);
 
 // Error handling middleware
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   console.error(err.stack);
   const logEntry = `[${new Date().toISOString()}] Error: ${err.message}`;
   logStream.write(logEntry + '\n');

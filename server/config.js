@@ -8,7 +8,6 @@ const MONGO_URL = "mongodb://localhost:27017/fake_so";
 
 const CLIENT_URL = "http://100.0.195.180:3000";
 const port = 8000;
-const balabal = 7000;
 
 module.exports = {
     MONGO_URL,

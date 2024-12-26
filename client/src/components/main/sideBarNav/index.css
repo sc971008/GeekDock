@@ -1,34 +1,5 @@
-/* .sideBarNav {
-    display: flex;
-    flex-direction: column;
-    width: 15%;
-    border-right: 2px solid #ddd; 
-    padding: 4% 0;
-    align-items: center;
-    background-color: #f8f9fa; 
-} */
-
-.menu_button:first-child {
-    margin-top: 0;
+#sideBarNav {  
+    position: relative;
+    z-index: 1;        
 }
 
-.menu_button {
-    height: 40px;
-    width: 80%;
-    margin-top: 20px;
-    border-radius: 8px; /* Rounder corners */
-    text-align: center;
-    line-height: 40px;
-    color: #555; /* Darker text */
-    cursor: pointer; /* Cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth transition */
-}
-
-.menu_button:hover {
-    background-color: #9c9b9b; /* Lighter background on hover */
-}
-
-.menu_selected {
-    background: #007bff; /* Selected menu background color */
-    color: white; /* Text color on selected */
-}

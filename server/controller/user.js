@@ -7,105 +7,105 @@ const Question = require("../models/questions");
 
 
 // adding user
-const registerUser = async(req,res) =>{
+const registerUser = async (req, res) => {
     // prevernt NoSQL injection
-    try{
+    try {
         let username = req.body.username.trim()
         let password = req.body.password.trim()
 
         //found username Match
-        if (await User.findOne({username: username})){
-            res.send({message: `[${username}] Already registered`})
-        }else{
-            let newUser = await User.create({username: username,password: password,reg_date:new Date()})
+        if (await User.findOne({ username: username })) {
+            res.send({ message: `[${username}] Already registered` })
+        } else {
+            let newUser = await User.create({ username: username, password: password, reg_date: new Date() })
             res.send(newUser)
         }
     }
-    catch(error){
+    catch (error) {
         // console.error("Server Error:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 }
 
-const loginUser = async(req,res) =>{
-    try{
+const loginUser = async (req, res) => {
+    try {
         let username = req.body.username.trim()
         let password = req.body.password.trim()
-        console.log({username,password})
+        console.log(username, password)
         //found username Match
-        const userMongo = await User.findOne({username: username})
-        console.log(userMongo)
-        if (userMongo){
-            if(userMongo.password == password){
-                req.session.user= userMongo._id
+        const userMongo = await User.findOne({ username: username })
+        if (userMongo) {
+            if (userMongo.password == password) {
+                req.session.user = userMongo._id
+                console.log(`[${req.session.user}] Login Success`)
                 res.send(userMongo)
-            }else{
-                res.send({message: "Password incorrect"})
+            } else {
+                res.send({ message: "Password incorrect" })
             }
-        }else{
-            res.send({message: "Username not found"})
+        } else {
+            res.send({ message: "Username not found" })
         }
     }
-    catch(error){
+    catch (error) {
         // console.error("Server Error:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 }
 
-const createNewList = async(req,res) =>{
+const createNewList = async (req, res) => {
     console.log(`[${req.session.user}]creating new list [${req.body.listName}]`)
-    try{
+    try {
         //if logged in
-        if(req.session.user){
+        if (req.session.user) {
             //look for match User in DB
             let userMongo = await User.findById(req.session.user)
             //if list already exist
-            if(userMongo.save_lists.some((list)=>{ return list.name == req.body.listName})){
+            if (userMongo.save_lists.some((list) => { return list.name == req.body.listName })) {
                 console.log("User.save_lists already have this list")
-                res.send({message: 'User.save_lists already have this list'})
+                res.send({ message: 'User.save_lists already have this list' })
             }
-            else{
-                await userMongo.save_lists.push({name:req.body.listName})
+            else {
+                await userMongo.save_lists.push({ name: req.body.listName })
                 // console.log(userMongo.save_lists)
                 res.send(await userMongo.save())
             }
         }
-        else{
-            res.send({message: 'User session not found'})
+        else {
+            res.send({ message: 'User session not found' })
         }
     }
-    catch(error){
+    catch (error) {
         // console.error("Server Error:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 }
 
-const saveQuestionToList = async(req,res)=>{
-    try{   
-         //if logged in
+const saveQuestionToList = async (req, res) => {
+    try {
+        //if logged in
 
-        if(req.session.user){
+        if (req.session.user) {
             // console.log(`[${req.session.user}]saving [${req.body.qid}] to [${req.body.listName}]`)
             let userMongo = await User.findById(req.session.user)
-            let targetList = await userMongo.save_lists.find((list)=>{ return list.name == req.body.listName})
+            let targetList = await userMongo.save_lists.find((list) => { return list.name == req.body.listName })
             let question = await Question.findById(req.body.qid)
 
-            if(targetList.questions.includes(question._id)){
-                res.send({message:`List already have this question`})
+            if (targetList.questions.includes(question._id)) {
+                res.send({ message: `List already have this question` })
                 return
             }
-            if(targetList && question){
+            if (targetList && question) {
                 // console.log(`[${userMongo.username}]saving [${question.title}] to [${targetList.name}]`)
                 await targetList.questions.push(question)
                 res.send(await userMongo.save())
-                return 
+                return
             }
         }
-        else{
-            res.send({message: 'User session not found'})
+        else {
+            res.send({ message: 'User session not found' })
         }
     }
-    catch(error){
+    catch (error) {
         // console.error("Server Error:", error);
         res.status(500).json({ message: "Internal server error: Save question to list" });
     }
@@ -137,13 +137,13 @@ const subscribeQuestion = async (req, res) => {
 
         // Check if the question is already been followed by user
         if (question.subscribers.includes(userId)) {
-            return res.send({message:"Question already have this follower"})
+            return res.send({ message: "Question already have this follower" })
         }
         // Add user to question's subscribers list
         question.subscribers.push(userId);
         await question.save();
 
-        res.send({ message: 'Subscription successful'});
+        res.send({ message: 'Subscription successful' });
     } catch (error) {
         console.error("Server Error:", error);
         res.status(500).json({ message: "Internal server error: subscribeQuestion" });
@@ -170,48 +170,49 @@ const getSubscribedQuestionsWithNewAnswers = async (req, res) => {
     }
 };
 
-const getSessionUser= async(req,res) =>{
+const getSessionUser = async (req, res) => {
     // console.log(`Get Session User Check : ${req.session.user}`)
-    if(req.session.user){
+    if (req.session.user) {
         const userMongo = await User.findById(req.session.user)
-        if(userMongo){
+        if (userMongo) {
             res.send(userMongo)
-        }else{
-            res.send({message:"Session No User Match in DB"})
+        } else {
+            res.send({ message: "Session No User Match in DB" })
         }
     }
-    else{
-        res.send({message: 'User session not found'})
+    else {
+        res.send({ message: 'User session not found' })
     }
 }
 
 //session checker
-router.use( (req, res, next) => {    
-  if (req.session.user) {
-      console.log(`User Ctrl: Found User ${req.session.user} Session`);
-      next();
-  } else {
-      console.log(`User Ctrl: No User Session Found`);
-      next();
-  }
+router.use((req, res, next) => {
+    if (req.session.user) {
+        console.log(`User Ctrl: Found User ${JSON.stringify(req.session)} Session`);
+        next();
+    } else {
+        console.log(`Request Session: ${JSON.stringify(req.session)}`);
+        console.log(`User Ctrl: No User Session Found`);
+        next();
+    }
 })
 
-router.post('/register',registerUser)
+router.post('/register', registerUser)
 
-router.post('/login',loginUser)
+router.post('/login', loginUser)
 
-router.get('/getSessionUser',getSessionUser)
+router.get('/getSessionUser', getSessionUser)
 
 router.get('/subscribedQuestionsWithNewAnswers', getSubscribedQuestionsWithNewAnswers);
 
-router.post('/subscribeQuestion',subscribeQuestion)
+router.post('/subscribeQuestion', subscribeQuestion)
 
-router.post('/createNewList',createNewList)
+router.post('/createNewList', createNewList)
 
-router.post('/saveQuestionToList',saveQuestionToList)
+router.post('/saveQuestionToList', saveQuestionToList)
 
 router.post("/logout", async (req) => {
     req.session.destroy()
-  })
+})
 
 module.exports = router;

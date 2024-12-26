@@ -12,17 +12,23 @@ import SavePage from "./savePage";
 import ProfilePage from "./profilePage";
 
 
-const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLogin, setUser,setPage, fetchUser, visual}) => {
+const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLogin, setUser, setPage, fetchUser }) => {
     const [questionOrder, setQuestionOrder] = useState("newest");
     const [qid, setQid] = useState("");
 
     let selected = "";
     let content = null;
 
+    const handleHome = () => {
+        setQuesitonPage("", `Welcome Back ${user != null ? user.username : ""}`);
+
+        setPage("home");
+    };
+
     const handleQuestions = () => {
         setQuesitonPage()
-        fetchUser()
-        setPage("home");
+
+        setPage("questions");
     };
 
     // const handleProfile = () => {
@@ -45,8 +51,8 @@ const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLog
     }
 
     const clickTag = (tname) => {
-        setQuesitonPage("[" + tname + "]", tname);
-        setPage("home");
+        setQuesitonPage(`[${tname}]`, `[${tname}]`);
+        setPage("questions");
     };
 
     const handleNewQuestion = () => {
@@ -60,7 +66,6 @@ const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLog
     const getQuestionPage = (order = "newest", search = "") => {
         return (
             <QuestionPage
-                visual={visual}
                 title_text={title}
                 order={order}
                 search={search}
@@ -75,7 +80,14 @@ const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLog
     };
 
     switch (page) {
+
         case "home": {
+            selected = "h";
+            content = getQuestionPage(questionOrder.toLowerCase(), search);
+            break;
+        }
+
+        case "questions": {
             selected = "q";
             content = getQuestionPage(questionOrder.toLowerCase(), search);
             break;
@@ -88,8 +100,6 @@ const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLog
                     user={user}
                     clickTag={clickTag}
                     handleAnswer={handleAnswer}
-
-
                 />
             );
             break;
@@ -97,12 +107,23 @@ const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLog
 
         case "register": {
             selected = "";
-            content = <Register setPage={setPage} />;
+            content = (
+                <Register
+                    setPage={setPage}
+                />
+            );
             break;
         }
         case "login": {
             selected = "";
-            content = <Login setPage={setPage} setLogin={setLogin} fetchUser={fetchUser} setUser={setUser} />;
+            content = (
+                <Login
+                    setPage={setPage}
+                    setLogin={setLogin}
+                    fetchUser={fetchUser}
+                    setUser={setUser}
+                />
+            );
             break;
         }
         case "tag": {
@@ -112,37 +133,52 @@ const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLog
                     clickTag={clickTag}
                     handleNewQuestion={handleNewQuestion}
                 />
-            );
+            )
+
             break;
         }
         case "answer": {
             selected = "";
-            content = (
-                <AnswerPage
-                    user={user}
-                    qid={qid}
-                    handleNewQuestion={handleNewQuestion}
-                    handleNewAnswer={handleNewAnswer}
-                    handleSave={handleSave}
-                    setPage={setPage}
-                    fetchUser={fetchUser}
-                />
-            );
+            content = <AnswerPage
+                user={user}
+                qid={qid}
+                handleNewQuestion={handleNewQuestion}
+                handleNewAnswer={handleNewAnswer}
+                handleSave={handleSave}
+                setPage={setPage}
+                fetchUser={fetchUser}
+            />
+
             break;
         }
         case "newQuestion": {
             selected = "";
-            content = <NewQuestion handleQuestions={handleQuestions} setPage={setPage} />;
+            content = (
+                <NewQuestion
+                    handleQuestions={handleQuestions}
+                    setPage={setPage} />
+            );
             break;
         }
         case "newAnswer": {
             selected = "";
-            content = <NewAnswer qid={qid} handleAnswer={handleAnswer} setPage={setPage} />;
+            content = (
+                <NewAnswer
+                    qid={qid}
+                    handleAnswer={handleAnswer}
+                    setPage={setPage} />
+            );
             break;
         }
         case "save": {
             selected = "";
-            content = <SavePage user={user} qid={qid} handleAnswer={handleAnswer} />
+            content = (
+                <SavePage
+                    user={user}
+                    qid={qid}
+                    handleAnswer={handleAnswer}
+                />
+            );
             break;
         }
         default:
@@ -153,14 +189,17 @@ const Main = ({ user, page = "home", search = "", setQuesitonPage, title, setLog
 
     return (
         <div id="main" className="main text-body">
-            <div className="container d-flex justify-content-between" >
-                <SideBarNav
-                    selected={selected}
-                    handleQuestions={handleQuestions}
-                    handleTags={handleTags}
-                />
-                <div id="right_main" className="right_main w-100">
-                    {content}
+            <div className="container" >
+                <div className="d-flex justify-content-between mb-3 rounded shadow-lg">
+                    <SideBarNav
+                        selected={selected}
+                        handleQuestions={handleQuestions}
+                        handleTags={handleTags}
+                        handleHome={handleHome}
+                    />
+                    <div id="right_main" className="right_main w-100">
+                        {content}
+                    </div>
                 </div>
             </div>
         </div>

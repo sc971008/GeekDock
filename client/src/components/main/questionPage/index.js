@@ -27,7 +27,7 @@ const QuestionPage = ({
         fetchData().catch((e) => console.log(e));
     }, [order, search]);
     return (
-        <>
+        <div id="question_page" className="bg-body  rounded p-4">
             <QuestionHeader
                 title_text={title_text}
                 qcnt={qlist.length}
@@ -36,7 +36,7 @@ const QuestionPage = ({
                 setPage={setPage}
                 visual={visual}
             />
-            <div id="question_list" className={`question_list d-flex flex-column bg-${visual==='dark'?'dark':'body'} border rounded`}>
+            <div id="question_list" className={`question_list d-flex flex-column  border rounded mb-2`}>
                 {qlist.map((q, idx) => (
                     <Question
                         q={q}
@@ -48,11 +48,12 @@ const QuestionPage = ({
                 ))}
             </div>
             {title_text === "Search Results" && !qlist.length && (
-                <div className="bold_title right_padding">
+                <div className="bold_title right_padding mt-2">
+                    Oh ho ~ <br></br>
                     No Questions Found
                 </div>
             )}
-        </>
+        </div>
     );
 };
 
