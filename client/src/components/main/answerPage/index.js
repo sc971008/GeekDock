@@ -33,7 +33,7 @@ const AnswerPage = ({user,qid, handleNewQuestion,handleSave,setPage,fetchUser}) 
     }
 
     return (
-        <div id="answer_page" className={`d-flex flex-column shadow px-5 py-4 border rounded bg-body`}>  
+        <div id="answer_page" className={`d-flex flex-column px-5 py-4 rounded bg-body`}>  
             <AnswerHeader
                 user={user}
                 question= {question}
@@ -72,7 +72,7 @@ const AnswerPage = ({user,qid, handleNewQuestion,handleSave,setPage,fetchUser}) 
                 ))}
             <div className="d-flex flex-column">
                 <button
-                    className="btn btn-primary mt-4 me-auto"
+                    className="btn btn-sm btn-primary mt-2 ms-auto"
                     onClick={() => {
                         handleNewAnswer();
                     }}

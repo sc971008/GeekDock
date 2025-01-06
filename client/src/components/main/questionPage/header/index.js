@@ -27,12 +27,12 @@ const QuestionHeader = ({title_text,qcnt,questionOrder,setQuestionOrder,setPage,
 
             <div className="d-flex flex-column justify-content-between gap-2 ms-auto">
                 <button
-                    className="btn btn-primary shadow-sm ms-auto"
+                    className="btn btn-primary btn-sm shadow-sm ms-auto"
                     onClick={() => {
                         handleNewQuestionClick()
                     }}
                 >
-                    {!askFeedBack && `Ask a Question`}{askFeedBack}
+                    {!askFeedBack && `Ask Question`}{askFeedBack}
                 </button>
                 <div id="orderBar" className={`btn-group btn-secondary bg-${visual ==='dark' ? 'dark':'body'} shadow-sm ms-auto`} role="group" aria-label="Basic radio toggle button group">  
                     {["Newest", "Active", "Unanswered"].map((label,idx) => (

@@ -15,7 +15,7 @@ const User = mongoose.Schema(
         username:{type:String, required:true, unique:true},
         password:{type:String, required:true},
         reg_date:{type:Date, required:true},
-        profile_pic_url:{ type: String, default: "http://100.0.195.180:8000/images/default.jpg"},
+        profile_pic_url:{ type: String, default: "http://192.168.1.49:8000/images/default.jpg"},
         save_lists:[questionList],
         subscribes:[{type:Schema.Types.ObjectId,ref:'Question'}],
     },

@@ -39,7 +39,7 @@ const Login = ({ setPage,setLogin,setUser}) => {
 
 
     return (
-        <div className="container d-flex flex-column align-items-center py-4 ">
+        <div className="container d-flex flex-column align-items-center py-4">
             <i className="fs-1 bi bi-braces-asterisk" style={{ color: "cornflowerblue" }} ></i>
             <form className="form-signin need-validation" onSubmit={postUser}>
                 <h3 className="fw-normal" >Please sign in.</h3>

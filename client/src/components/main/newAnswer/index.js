@@ -1,17 +1,17 @@
-import "./index.css";
-import { useState } from "react";
-import Form from "../baseComponents/form";
-import Textarea from "../baseComponents/textarea";
-import { validateHyperlink } from "../../../tool";
+import { useRef, useState } from "react";
 import { addAnswer } from "../../../services/answerService";
-import { getUser} from "../../../services/userService"
-const NewAnswer = ({ qid, handleAnswer,setPage }) => {
+import { getUser } from "../../../services/userService"
+import FloatInput from "../baseComponents/floatingInput";
+const NewAnswer = ({ qid, handleAnswer, setPage }) => {
 
-    const [text, setText] = useState("");
+    const textRef = useRef(null)
     const [textErr, setTextErr] = useState("");
+    const [loading, setLoading] = useState(false)
 
-    const postAnswer = async () => {
-        let isValid = true;
+    const postAnswer = async (event) => {
+        event.preventDefault()
+        setTextErr("")
+        setLoading(true)
 
         //if not logged in
         const user = await getUser();
@@ -20,56 +20,43 @@ const NewAnswer = ({ qid, handleAnswer,setPage }) => {
             setTimeout(() => { setPage("login") }, 1000)
         }
 
-        if (!text) {
-            setTextErr("Answer text cannot be empty");
-            isValid = false;
-        }
-
-        // Hyperlink validation
-        if (!validateHyperlink(text)) {
-            setTextErr("Invalid hyperlink format.");
-            isValid = false;
-        }
-
-        if (!isValid) {
-            return;
-        }
-
         const answer = {
-            text: text,
+            text: textRef.current.value,
             ans_by: user.username,
             ans_date_time: new Date(),
         };
 
         console.log(answer)
+
         const res = await addAnswer(qid, answer);
         if (res && res._id) {
             handleAnswer(qid);
+        } else {
+            setTextErr(res.message);
+            setLoading(false);
         }
     };
     return (
-        <Form>
-            <Textarea
-                title={"Answer Text"}
-                id={"answerTextInput"}
-                val={text}
-                setState={setText}
-                err={textErr}
-            />
-            <div className="btn_indicator_container">
-                <button
-                    className="form_postBtn"
-                    onClick={() => {
-                        postAnswer();
-                    }}
-                >
-                    Post Answer
+        <div className="container d-flex flex-column align-items-center py-4">
+            <form className="form-signin need-validation w-75" onSubmit={postAnswer}>
+                <h3 className="fw-normal" >Type your anwser here.</h3>
+                <FloatInput
+                    id="floatingInput"
+                    label="Anwser"
+                    ref={textRef}
+                    type="text"
+                    placeholder="Type your anwser here."
+                />
+                <button className="btn btn-primary py-2 mt-2 " type="submit">
+                {loading ? (
+                    <div className="spinner-border text-light py-2" role="status">
+                    </div>
+                ) : (
+                    'Submit')}
                 </button>
-                <div className="mandatory_indicator">
-                    * indicates mandatory fields
-                </div>
-            </div>
-        </Form>
+            </form>
+            <div className="my-2 text-warning">{textErr}</div>
+        </div>
     );
 };
 

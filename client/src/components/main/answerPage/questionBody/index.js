@@ -4,7 +4,7 @@ import { handleHyperlink } from "../../../../tool";
 import {voteQuestionById} from '../../../../services/voteService'
 
 // Component for the Question's Body
-const QuestionBody = ({user, qid, views, vote, text, askBy, meta, onVoteChange, setPage}) => {
+const QuestionBody = ({user, qid, views, vote, text, askby, meta, onVoteChange, setPage}) => {
 
     const handleUpvote = async () => {
         if (!user) {
@@ -59,17 +59,24 @@ const QuestionBody = ({user, qid, views, vote, text, askBy, meta, onVoteChange, 
 
     
     return (
-        <div id="questionBody" className="questionBody right_padding">
-            <div className="vote_section">
-                <div className="aVote" onClick={handleUpvote}>🔺</div>
-                <span id="voteCount">{`${vote}`}</span>
-                <div className="aVote" onClick={handleDownvote}>🔻</div>
+        <div id="questionBody" className="d-flex flex-wrap justify-cotent-between border rounded shadow p-3">
+            <div id=""className="d-flex">
+                <div id="vote_section" className="d-flex flex-column align-items-center">
+                    <button id="vote_up" className="btn btn-primary btn-sm rounded-pill" onClick={handleUpvote}>
+                        <i className="bi bi-caret-up-fill"></i>
+                    </button>
+                    <div id="voteCount">{`${vote}`}</div>
+                    <button id="vote_down" className="btn btn-primary btn-sm rounded-pill" onClick={handleDownvote}>
+                        <i className="bi bi-caret-down-fill"></i>
+                    </button>
+                </div>
+
+                <div id="question_text" className="px-3">{handleHyperlink(text)}</div>
             </div>
-            <div className="view">{views} views</div>
-            <div className="answer_question_text">{handleHyperlink(text)}</div>
-            <div className="answer_question_right">
-                <div className="question_author">{askBy}</div>
-                <div className="answer_question_meta">asked {meta}</div>
+            <div id="question_meta" className="ms-auto text-end">
+                <div className="question_author font-monospace">{askby}</div>
+                <div className="answer_question_meta text-secondary ">asked {meta}</div>
+                <div className="view text-secondary">{views} views</div>
             </div>
         </div>
     );

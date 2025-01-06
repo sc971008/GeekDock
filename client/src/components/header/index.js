@@ -1,6 +1,6 @@
 import "./index.css";
 import React, { useState } from "react";
-import { logoutUser } from "../../services/userService";
+import { logoutUser } from "../../services/userService"
 
 
 const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login,visual}) => {

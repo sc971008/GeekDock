@@ -3,7 +3,7 @@ import "./index.css";
 const SideBarNav = ({ selected = "", handleQuestions, handleTags,handleHome }) => {
     return (
         <>
-            <div id="sideBarNav" className="d-flex flex-column flex-shrink-0 p-2 rounded-start">
+            <div id="sideBarNav" className="d-flex flex-column flex-shrink-0 p-2 shadow rounded-start">
                 <ul className="nav nav-pills flex-column mb-auto">
                     <li
                         id="menu_home"

@@ -45,7 +45,7 @@ app.use(
 app.use(
   cors({
     credentials: true, // 允许发送 Cookie
-    origin: ["http://localhost:3000","http://100.0.195.180:3000"], // 允许的前端地址
+    origin: CLIENT_URL // 允许的前端地址
   })
 );
 
