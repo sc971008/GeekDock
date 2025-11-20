@@ -62,11 +62,11 @@ const QuestionBody = ({user, qid, views, vote, text, askby, meta, onVoteChange, 
         <div id="questionBody" className="d-flex flex-wrap justify-cotent-between border rounded shadow p-3">
             <div id=""className="d-flex">
                 <div id="vote_section" className="d-flex flex-column align-items-center">
-                    <button id="vote_up" className="btn btn-primary btn-sm rounded-pill" onClick={handleUpvote}>
+                    <button id="vote_up" className="border btn btn-sm shadow-sm" onClick={handleUpvote}>
                         <i className="bi bi-caret-up-fill"></i>
                     </button>
-                    <div id="voteCount">{`${vote}`}</div>
-                    <button id="vote_down" className="btn btn-primary btn-sm rounded-pill" onClick={handleDownvote}>
+                    <div id="voteCount" className="p-1 text-secondary">{`${vote}`}</div>
+                    <button id="vote_down" className="border btn btn-sm shadow-sm" onClick={handleDownvote}>
                         <i className="bi bi-caret-down-fill"></i>
                     </button>
                 </div>

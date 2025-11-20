@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Header from "./header";
 import Main from "./main";
 import { getUser } from "../services/userService";
+import Footer from "./footer";
 
 
 export default function GeekDock() {
@@ -57,14 +58,15 @@ export default function GeekDock() {
                 fetchUser={fetchUser}
                 setQuesitonPage={setQuesitonPage}
             />
-            <button id="visualToggleBtn" className="bd-mode-toggle btn btn-sm bg-secondary bg-opacity-25 position-fixed bottom-0 end-0 mb-3 me-3"  onClick={() => {
+            <button id="visualToggleBtn" className="bd-mode-toggle btn btn-sm bg-secondary bg-opacity-25 position-fixed bottom-0 end-0 mb-3 me-3" onClick={() => {
                 if (visual === "dark") {
                     setVisual("light")
                 } else {
                     setVisual("dark")
                 }
-            }}>{visual === "dark" ?  <i className="bi bi-brightness-high-fill"></i>: <i className="bi bi-moon-stars-fill"></i>}
+            }}>{visual === "dark" ? <i className="bi bi-brightness-high-fill"></i> : <i className="bi bi-moon-stars-fill"></i>}
             </button>
+            <Footer/>
         </div>
     );
 }

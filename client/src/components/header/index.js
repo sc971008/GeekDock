@@ -8,7 +8,7 @@ const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login,visual
 
 
 	return (
-		<>
+
 			<header id="header" className="container py-4 text-body">
 
 				<div className="border-bottom ">
@@ -81,8 +81,6 @@ const Header = ({ user, search, setQuesitonPage, setPage, setLogin, login,visual
 				</div>
 
 			</header >
-
-		</>
 	);
 };
 
