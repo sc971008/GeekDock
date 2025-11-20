@@ -1,7 +1,7 @@
 // Add configuration setting for your server to this file
 
 // uncomment for MONGO_URL for docker
-const MONGO_URL = "process.env.MONGO_URL/fake_so";
+const MONGO_URL = process.env.MONGO_URL
 // const MONGO_URL = "mongodb://mongodb:27017/fake_so";
 
 // config for local testing, that is, without docker.
