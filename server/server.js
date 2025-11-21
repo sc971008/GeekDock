@@ -28,19 +28,6 @@ app.use(express.static(__dirname + '/public'));
 // session
 app.use(express.urlencoded({ extended: false }))
 const secret = process.argv[2];
-app.use(
-  session({
-    secret: `${secret}`,
-    cookie: {
-        sameSite: "None",
-        secure: false,
-        httpOnly: true,// 1 week ,
-        maxAge: 7 * 24 * 60 * 60 * 1000 
-    },
-    resave: false,
-    saveUninitialized: false
-  })
-)
 
 // set cross site
 app.use(
@@ -49,6 +36,22 @@ app.use(
     origin: CLIENT_URL // 允许的前端地址
   })
 );
+
+app.use(
+  session({
+    secret: `${secret}`,
+    cookie: {
+        secure: true,
+        httpOnly: true,// 1 week ,
+        sameSite: 'none',
+        maxAge: 7 * 24 * 60 * 60 * 1000 
+    },
+    resave: false,
+    saveUninitialized: false
+  })
+)
+
+
 
 app.use(express.json());
 
