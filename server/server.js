@@ -35,7 +35,6 @@ app.use(
   session({
     secret: `${secret}`,
     cookie: {
-        secure: true,
         httpOnly: true,// 1 week ,
         sameSite: 'none',
         maxAge: 7 * 24 * 60 * 60 * 1000 
