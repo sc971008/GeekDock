@@ -29,13 +29,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: false }))
 const secret = process.argv[2];
 
-// set cross site
-app.use(
-  cors({
-    credentials: true, // 允许发送 Cookie
-    origin: CLIENT_URL // 允许的前端地址
-  })
-);
+
 
 app.use(
   session({
@@ -51,7 +45,13 @@ app.use(
   })
 )
 
-
+// set cross site
+app.use(
+  cors({
+    credentials: true, // 允许发送 Cookie
+    origin: CLIENT_URL // 允许的前端地址
+  })
+);
 
 app.use(express.json());
 
