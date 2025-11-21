@@ -1,6 +1,6 @@
 import _axios from "axios";
 
-const REACT_APP_API_URL = "http://localhost:8000";
+const REACT_APP_API_URL = "https://geekdockserver-production.up.railway.app/:8000";
 
 const handleRes = (res) => {
     return res;
